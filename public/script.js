@@ -105,6 +105,27 @@ $('#stop_video').click(function() {
     }
 });
 
+$('#invite_button').click(function() {
+    const to = prompt("Enter the recipient's email address");
+    let data = {
+        url: window.location.href,
+        to: to
+    };
+    $.ajax({
+        url: '/send-mail',
+        type: 'post',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(result) {
+            alert("Invite sent!");
+        },
+        error: function(result) {
+            console.log(result.responseJSON);
+        }
+    });
+});
+
 peer.on('open',(id)=> {
     socket.emit('join-room',ROOM_ID,id,user);
 });
